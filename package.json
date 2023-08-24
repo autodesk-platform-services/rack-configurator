@@ -1,0 +1,16 @@
+{
+  "name": "rackconfigurator",
+  "version": "1.0.0",
+  "description": "Sample application for learnforge.autodesk.io.",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-formidable": "^1.2.0",
+    "forge-apis": "^0.9.2",
+    "formidable": "^2.0.1"
+  }
+}
