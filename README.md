@@ -1,4 +1,4 @@
-# rack-configuration
+# rack-configurator
 
 [![Node.js](https://img.shields.io/badge/Node.js-4.4.3-blue.svg)](https://nodejs.org/)
 [![npm](https://img.shields.io/badge/npm-2.15.1-blue.svg)](https://www.npmjs.com/)
@@ -22,7 +22,7 @@ This sample is a demo for rack configuration.
 
 ## Live Demo
 
-[rack-configuration.autodesk.io](https://rack-configuration.autodesk.io)
+[rack-configurator.autodesk.io](https://rack-configurator.autodesk.io)
 
 # Setup
 
@@ -34,7 +34,7 @@ Install [NodeJS](https://nodejs.org).
 
 Clone this project or download it. It's recommended to install [GitHub Desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone https://github.com/autodesk-platform-services/aps-extensions.git
+    git clone https://github.com/libvarun/rack-configurator.git
 
 To run it, install the required packages, set the enviroment variables with your client ID & Secret and finally start it. Via command line, navigate to the folder where this repository was cloned to and use the following commands:
 
