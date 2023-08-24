@@ -82,7 +82,4 @@ This sample is licensed under the terms of the [MIT License](http://opensource.o
 Please see the [LICENSE](LICENSE) file for full details.
 
 ## Written by
-
-The [APS Advocates](http://aps.autodesk.com) team:
-
-* Varun Patil [@VarunPatil578](https://twitter.com/VarunPatil578)
+Varun Patil [@VarunPatil578](https://twitter.com/VarunPatil578)
