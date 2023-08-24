@@ -1,35 +1,20 @@
-# aps-extensions
+# rack-configuration
 
 [![Node.js](https://img.shields.io/badge/Node.js-4.4.3-blue.svg)](https://nodejs.org/)
 [![npm](https://img.shields.io/badge/npm-2.15.1-blue.svg)](https://www.npmjs.com/)
 ![Platforms](https://img.shields.io/badge/platform-windows%20%7C%20osx%20%7C%20linux-lightgray.svg)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://opensource.org/licenses/MIT)
 
-[![oAuth2](https://img.shields.io/badge/oAuth2-v1-green.svg)](http://forge.autodesk.com/)
-[![Data-Management](https://img.shields.io/badge/Data%20Management-v1-green.svg)](http://forge.autodesk.com/)
-[![Model-Derivative](https://img.shields.io/badge/Model%20Derivative-v2-green.svg)](http://forge.autodesk.com/)
-[![Viewer](https://img.shields.io/badge/Viewer-v7-green.svg)](http://forge.autodesk.com/)
+[![oAuth2](https://img.shields.io/badge/oAuth2-v1-green.svg)](http://aps.autodesk.com/)
+[![Data-Management](https://img.shields.io/badge/Data%20Management-v1-green.svg)](http://aps.autodesk.com/)
+[![Model-Derivative](https://img.shields.io/badge/Model%20Derivative-v2-green.svg)](http://aps.autodesk.com/)
+[![Viewer](https://img.shields.io/badge/Viewer-v7-green.svg)](http://aps.autodesk.com/)
 
-[![Level](https://img.shields.io/badge/Level-Basic-blue.svg)](http://forge.autodesk.com/)
+[![Level](https://img.shields.io/badge/Level-Basic-blue.svg)](http://aps.autodesk.com/)
 
 # Description
 
-This sample is a collection of extensions ready to be reused. Just add reference to the required files, load and use. Check each extension documentation for details.
-
-1. [Camera Rotation](public/extensions/CameraRotation)
-2. [Icon Markup](public/extensions/IconMarkupExtension)
-3. [Nested Viewer](public/extensions/NestedViewerExtension)
-4. [Transform](public/extensions/TransformationExtension)
-5. [GoogleMapsLocator](public/extensions/GoogleMapsLocator)
-6. [Draw Tool Extension](public/extensions/DrawToolExtension)
-7. [Custom Properties Extension](public/extensions/CustomPropertiesExtension)
-8. [XLS Extension](public/extensions/XLSExtension)
-8. [Edit2D Extension](public/extensions/Edit2dExtension)
-9. [Phasing Extension](public/extensions/PhasingExtension)
-
-Extensions were created using a [Basic Skeleton](public/extensions/BasicSkeleton).
-
-This sample is based on the [Learn APS](http://learnforge.autodesk.io) tutorials in the section *View modelss*.
+This sample is a demo for rack configuration.
 
 ## Thumbnail
 
@@ -37,9 +22,7 @@ This sample is based on the [Learn APS](http://learnforge.autodesk.io) tutorials
 
 ## Live Demo
 
-Extensions are dynamically loaded and unloaded for testing on the live version.
-
-[aps-extensions.autodesk.io](https://aps-extensions.autodesk.io)
+[rack-configuration.autodesk.io](https://rack-configuration.autodesk.io)
 
 # Setup
 
@@ -71,111 +54,9 @@ Windows (use **Node.js command line** from the Start menu)
 
 Open the browser: [http://localhost:3000](http://localhost:3000).
 
-# Steps to plug in new extension
-
-1) Create folder in public/extensions with same name as extension name.
-Structure of the extension folder is as shown below:
-<pre>
-ExtensionName[Folder]
-        | 
-        |->contents
-        |     |
-        |     |->main.js
-        |     |->main.css
-        |     |->assets[folder]
-        |->config.json
-</pre>        
-Refer the [BasicSkeleton Extension](https://github.com/autodesk-platform-services/aps-extensions/tree/main/public/extensions/BasicSkeleton) for boilerplate code.
-
-2) Each extension folder should be self-contained code, so that it's easily shareable between projects.
-Extension[Folder]/config.json is meant for keeping the config of an extension and for sharing.
-
-Extension config schema:
-<pre>
-{
-    "name":"extension name registered",
-    "displayname": "display name for the extension in list",
-    "description": "description for the extension",
-    "options":{model specific information array to pass on to extension constructor},
-    "viewerversion":"viewer version",
-    "loadonstartup": "true or false",
-    "filestoload":{
-        "cssfiles":["css file(s)"],
-        "jsfiles":["js file(s)"]
-    },
-    "bloglink":"Blog link for working explanation of the extension (optional)",
-    "includeinlist":"true or false"
-}
-</pre>
-Example: [IconMarkupExtension config.json](https://github.com/autodesk-platform-services/aps-extensions/blob/main/public/extensions/IconMarkupExtension/config.json)
-
-> Note: If your extension relies on event Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT to load, in load function check if the data is already loaded, if not only then add the event listener, below code shows the structure.
-<pre>
-class MyExtension extends Autodesk.Viewing.Extension {
-    ...
-    load() {
-        ...
-        if (this.viewer.model.getInstanceTree()) {
-            this.onTreeReady();
-        } else {
-            this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, this.onTreeReady.bind(this));
-        }
-        ...
-    }
-    ...
-    onTreeReady() {
-        const tree = this.viewer.model.getInstanceTree();
-        ...
-    }
-    ...
-}
-</pre>
-Example: [IconMarkupExtension load function](https://github.com/autodesk-platform-services/aps-extensions/blob/main/public/extensions/IconMarkupExtension/contents/main.js#L26)
-
-> Note: After the new extension is added, please restart the server.
-
-# Understanding extensionloader and using it in aps app
-
-The way loose coupling between extensions and aps app is achived is with custom event, if you want to use extensionloader in your aps app, follow the three steps:
-
-1) Copy paste the [extensions](https://github.com/autodesk-platform-services/aps-extensions/tree/main/public/extensions) in public folder of your app or in the folder where the index file resides. 
-
-2) Include below script in index.html file
-<pre>
-<script src="/extensions/extensionloader.js"></script>
-</pre>
-
-3) Here's the linking part between the app and the extensionloader, in viewer [onDocumentLoadSuccess](https://github.com/autodesk-platform-services/aps-extensions/blob/main/public/js/ApsViewer.js#L35) function, emit an event to inform the extensionloader that viewer has loaded the model with the below [code](https://github.com/autodesk-platform-services/aps-extensions/blob/main/public/js/ApsViewer.js#L39):
-<pre>
-var ViewerInstance = new CustomEvent("viewerinstance", {detail: {viewer: viewer}});      
-document.dispatchEvent(ViewerInstance);
-</pre>
- To load an extension programmatically, emit the below event.
- <pre>
- var LoadExtensionEvent = new CustomEvent("loadextension", {
-              detail: {
-                extension: "Extension1",
-                viewer: viewer
-             }
-         });
- document.dispatchEvent(LoadExtensionEvent);
- </pre>
-
-To unload extension:
-<pre>
- var UnloadExtensionEvent = new CustomEvent("unloadextension", {
-              detail: {
-                extension: "Extension1",
-                viewer: viewer
-             }
-         });
- document.dispatchEvent(UnloadExtensionEvent);
-</pre>
->Note: If the extension needs additional UI elements, first option we suggest is use the viewer UI [Autodesk.Viewing.UI.DockingPanel](https://forge.autodesk.com/en/docs/viewer/v2/reference/javascript/dockingpanel)
-
 ## Packages used
 
-The [Autodesk Platform Services](https://www.npmjs.com/package/forge-apis) packages are included by default. Some other non-Autodesk packages are used, including [express](https://www.npmjs.com/package/express) and [multer](https://www.npmjs.com/package/multer) for upload.
+The [Autodesk Platform Services](https://www.npmjs.com/package/forge-apis) packages are included by default. Some other non-Autodesk packages are used, including [express](https://www.npmjs.com/package/express) 
 
 # Tips & tricks
 
@@ -202,8 +83,6 @@ Please see the [LICENSE](LICENSE) file for full details.
 
 ## Written by
 
-The [APS Advocates](http://forge.autodesk.com) team:
+The [APS Advocates](http://aps.autodesk.com) team:
 
 * Varun Patil [@VarunPatil578](https://twitter.com/VarunPatil578)
-* Petr Broz [@ipetrbroz](https://twitter.com/ipetrbroz)
-* Augusto Goncalves [@augustomaia](https://twitter.com/augustomaia)

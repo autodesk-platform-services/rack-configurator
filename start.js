@@ -30,8 +30,6 @@ let app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ limit: '50mb' }));
 app.use('/api/aps/oauth', require('./routes/oauth'));
-app.use('/api/aps/oss', require('./routes/oss'));
-app.use('/api/aps/modelderivative', require('./routes/modelderivative'));
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(err.statusCode).json(err);

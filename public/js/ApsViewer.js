@@ -18,7 +18,7 @@
 
 var viewer;
 var fragslist = [];
-let dbids = [20, 22, 24, 26,28,30]
+let dbids = [20, 22, 24, 26,28,30]  // change these based on your model
 function launchViewer(urn) {
   var options = {
     env: 'AutodeskProduction',
