@@ -18,7 +18,7 @@
 
 $(document).ready(function () {
 
-  launchViewer('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6aW90X3Rlc3Qvc2hlbHZlcy0xODAtMTIwLTIuaWFtLnppcA')
+  launchViewer('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6aW90X3Rlc3Qvc2hlbHZlcy0xODAtMTIwLTIuaWFtLnppcA')  // Change this from your model
   var slider = document.getElementById("myRange");
   var output = document.getElementById("demo");
   output.innerHTML = slider.value;
@@ -43,7 +43,7 @@ $(document).ready(function () {
   })
 
   let scale = ()=>{
-    fragslist.forEach(frgid=>{
+    fragslistforscale.forEach(frgid=>{
       const proxy = viewer.impl.getFragmentProxy(viewer.model, frgid);
       proxy.scale = new THREE.Vector3((1+increment), 1,1);
       proxy.updateAnimTransform();
@@ -54,12 +54,13 @@ $(document).ready(function () {
   let tilt = (pos,angle)=> {
     const axis = new THREE.Vector3(1, 0, 0);
     const meshes = [];
-    let fragId = 7  //  chnage this based on the model.
-    const mesh = viewer.impl.getFragmentProxy(viewer.model, fragId);
-    mesh.scale = new THREE.Vector3(1, 1, 1);
-    mesh.quaternion = new THREE.Quaternion(0, 0, 0, 0);
-    mesh.position = new THREE.Vector3(pos.x, pos.y, pos.z);
-    meshes.push(mesh);
+    fragslistfortilt.forEach(fragId => {
+      const mesh = viewer.impl.getFragmentProxy(viewer.model, fragId);
+      mesh.scale = new THREE.Vector3(1, 1, 1);
+      mesh.quaternion = new THREE.Quaternion(0, 0, 0, 0);
+      mesh.position = new THREE.Vector3(pos.x, pos.y, pos.z);
+      meshes.push(mesh);
+    });
     for (const mesh of meshes) {
       mesh.quaternion.setFromAxisAngle(axis, angle);
       mesh.updateAnimTransform();

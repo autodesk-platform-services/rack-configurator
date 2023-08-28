@@ -17,8 +17,10 @@
 /////////////////////////////////////////////////////////////////////
 
 var viewer;
-var fragslist = [];
-let dbids = [20, 22, 24, 26,28,30]  // change these based on your model
+var fragslistforscale = [];
+var fragslistfortilt = [];
+let dbidsforscale = [20, 22, 24, 26,28,30]  // change these based on your model
+let dbidsfortilt = [26]  // change these based on your model
 function launchViewer(urn) {
   var options = {
     env: 'AutodeskProduction',
@@ -41,9 +43,14 @@ function onDocumentLoadSuccess(doc) {
     viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, ()=>{
         const model = viewer.model;
         const instanceTree = model.getData().instanceTree;
-        dbids.forEach(dbid=>{
+        dbidsforscale.forEach(dbid=>{
           instanceTree.enumNodeFragments( dbid, ( fragId ) => {
-            fragslist.push(fragId)
+            fragslistforscale.push(fragId)
+          }, true );
+        });
+        dbidsfortilt.forEach(dbid=>{
+          instanceTree.enumNodeFragments( dbid, ( fragId ) => {
+            fragslistfortilt.push(fragId)
           }, true );
         });
     });
