@@ -37,9 +37,19 @@ function launchViewer(urn) {
 }
 
 function onDocumentLoadSuccess(doc) {
-  var viewables = doc.getRoot().getDefaultGeometry();
+  let viewables = doc.getRoot().getDefaultGeometry();
   viewer.loadDocumentNode(doc, viewables).then(i => {
     // documented loaded, any action?
+    let nav = viewer.navigation
+    let pos = nav.getPosition()
+    let target = nav.getTarget()
+    let viewdir = new THREE.Vector3()
+    viewdir.subVectors (pos, target).normalize()
+    // zooms out by 100 along the view direction
+    viewdir.multiplyScalar (100)
+    pos.add(viewdir)
+
+    nav.setPosition(pos)
     viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, ()=>{
         const model = viewer.model;
         const instanceTree = model.getData().instanceTree;
