@@ -39,18 +39,14 @@ function onDocumentLoadSuccess(doc) {
   viewer.loadDocumentNode(doc, viewables).then(i => {
     // documented loaded, any action?
     viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, ()=>{
-
         const model = viewer.model;
         const instanceTree = model.getData().instanceTree;
-
         dbids.forEach(dbid=>{
           instanceTree.enumNodeFragments( dbid, ( fragId ) => {
             fragslist.push(fragId)
           }, true );
         });
-
     });
-      
   });
 }
 
