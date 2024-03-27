@@ -1,7 +1,7 @@
 {
   "name": "rackconfigurator",
   "version": "1.0.0",
-  "description": "Sample application for learnforge.autodesk.io.",
+  "description": "This sample demonstrates a simple way to scale, change rotation and position of object(s) inside viewer",
   "main": "start.js",
   "scripts": {
     "start": "node start.js"
