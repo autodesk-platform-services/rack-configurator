@@ -1,3 +1,6 @@
+<!-- archived-notice -->
+> **This repository is archived.** Archived repositories are not maintained or supported.
+
 # rack-configurator
 
 [![Node.js](https://img.shields.io/badge/Node.js-20.0.0-blue.svg)](https://nodejs.org/)
